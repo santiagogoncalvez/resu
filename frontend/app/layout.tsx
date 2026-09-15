@@ -5,9 +5,12 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
 
-const appUrl = process.env.VERCEL_URL
-   ? `https://${process.env.VERCEL_URL}`
-   : "http://localhost:3000";
+const appUrl =
+   process.env.VERCEL_ENV === "production"
+      ? (process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000")
+      : process.env.VERCEL_URL
+        ? `https://${process.env.VERCEL_URL}`
+        : "http://localhost:3000";
 
 export async function generateMetadata(): Promise<Metadata> {
    const metadata = await loaders.getMetaData();

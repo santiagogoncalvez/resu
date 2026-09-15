@@ -24,7 +24,7 @@ export function ErrorContent({
    return (
       <main className="flex flex-1 items-center justify-center px-4 py-16 h-full">
          <div className="flex w-full max-w-md flex-col items-center text-center">
-            <h1 className="text-3xl font-semibold tracking-tight">{title}</h1>
+            <h1 className="text-3xl font-medium tracking-tight">{title}</h1>
 
             <p className="mt-4 max-w-sm text-sm leading-6 text-muted-foreground">
                {description}
