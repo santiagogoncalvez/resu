@@ -74,13 +74,13 @@ export default function ConfirmEmail({ email }: { email: string }) {
 
                   <CardDescription className="text-center">
                      <p>
-                        Te hemos enviado un enlace de confirmación a tu correo
-                        electrónico. Revisa tu bandeja de entrada y haz clic en
-                        el enlace para verificar tu cuenta antes de registrarte.
+                        Te enviamos un enlace de confirmación. Revisá tu bandeja
+                        de entrada y hacé clic en el enlace para verificar tu
+                        cuenta.
                      </p>
                   </CardDescription>
                </CardHeader>
-               
+
                <fieldset disabled={isPending}>
                   <CardContent
                      className={cn(SIGN_IN_FORM_STYLES.content, "mt-4")}
@@ -90,9 +90,8 @@ export default function ConfirmEmail({ email }: { email: string }) {
                         data-invalid={!!formState.zodErrors?.email}
                      >
                         <FieldLabel htmlFor="email">
-                           ¿No recibiste el correo electrónico? Revisa tu
-                           carpeta de correo no deseado o intenta reenviarlo
-                           abajo.
+                           ¿No recibiste el correo? Revisá spam o reenviá el
+                           correo.
                         </FieldLabel>
                         <Input
                            id="email"
