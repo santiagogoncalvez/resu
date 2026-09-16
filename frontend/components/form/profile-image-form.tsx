@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useEffect, useRef } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
 
 import { actions } from "@/actions";
 import { cn } from "@/lib/utils";
@@ -48,6 +48,8 @@ export function ProfileImageForm({ image, className }: ProfileImageFormProps) {
       INITIAL_STATE,
    );
 
+   const [hasChanges, setHasChanges] = useState(false);
+
    const lastTimestamp = useRef<number | null>(null);
 
    useEffect(() => {
@@ -63,9 +65,17 @@ export function ProfileImageForm({ image, className }: ProfileImageFormProps) {
             duration: 3000,
          });
 
+         // eslint-disable-next-line react-hooks/set-state-in-effect
+         setHasChanges(false);
+
          router.refresh();
       }
-   }, [formState.success, formState.message, formState.timestamp, router]);
+   }, [
+      formState.success,
+      formState.message,
+      formState.timestamp,
+      router,
+   ]);
 
    return (
       <div className={IMAGE_FORM_STYLES.container}>
@@ -94,6 +104,7 @@ export function ProfileImageForm({ image, className }: ProfileImageFormProps) {
                         name="image"
                         label="Imagen de perfil"
                         defaultValue={image?.url ?? ""}
+                        onChange={() => setHasChanges(true)}
                      />
 
                      <FieldError
@@ -109,6 +120,7 @@ export function ProfileImageForm({ image, className }: ProfileImageFormProps) {
                      text="Guardar imagen"
                      loadingText="Guardando imagen"
                      loading={isPending}
+                     disabled={!hasChanges}
                   />
 
                   {formState.strapiErrors && (

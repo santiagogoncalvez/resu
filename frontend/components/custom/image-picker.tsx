@@ -70,6 +70,7 @@ export default function ImagePicker({
    name,
    label,
    defaultValue,
+   onChange,
 }: Readonly<ImagePickerProps>) {
    const fileInput = useRef<HTMLInputElement>(null);
 
@@ -99,6 +100,8 @@ export default function ImagePicker({
 
          return;
       }
+
+      onChange?.(e);
 
       setError(null);
 

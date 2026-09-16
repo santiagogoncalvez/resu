@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useEffect, useRef } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 
 import {
@@ -43,6 +43,21 @@ export function ProfileForm({ user, className }: Readonly<ProfileFormProps>) {
       INITIAL_STATE,
    );
 
+   const [initialValues, setInitialValues] = useState({
+      firstName: user?.firstName ?? "",
+      lastName: user?.lastName ?? "",
+      bio: user?.bio ?? "",
+   });
+
+   const [firstName, setFirstName] = useState(initialValues.firstName);
+   const [lastName, setLastName] = useState(initialValues.lastName);
+   const [bio, setBio] = useState(initialValues.bio);
+
+   const isDirty =
+      firstName !== initialValues.firstName ||
+      lastName !== initialValues.lastName ||
+      bio !== initialValues.bio;
+
    const lastTimestamp = useRef<number | null>(null);
 
    useEffect(() => {
@@ -57,8 +72,22 @@ export function ProfileForm({ user, className }: Readonly<ProfileFormProps>) {
             position: "top-center",
             duration: 3000,
          });
+
+         // eslint-disable-next-line react-hooks/set-state-in-effect
+         setInitialValues({
+            firstName,
+            lastName,
+            bio,
+         });
       }
-   }, [formState.success, formState.message, formState.timestamp]);
+   }, [
+      formState.success,
+      formState.message,
+      formState.timestamp,
+      firstName,
+      lastName,
+      bio,
+   ]);
 
    if (!user) {
       return (
@@ -122,10 +151,9 @@ export function ProfileForm({ user, className }: Readonly<ProfileFormProps>) {
                               id="firstName"
                               name="firstName"
                               placeholder="Nombre"
-                              defaultValue={
-                                 formState.data?.firstName ??
-                                 user.firstName ??
-                                 ""
+                              value={firstName}
+                              onChange={(event) =>
+                                 setFirstName(event.target.value)
                               }
                               aria-invalid={!!formState.zodErrors?.firstName}
                            />
@@ -145,8 +173,9 @@ export function ProfileForm({ user, className }: Readonly<ProfileFormProps>) {
                               id="lastName"
                               name="lastName"
                               placeholder="Apellido"
-                              defaultValue={
-                                 formState.data?.lastName ?? user.lastName ?? ""
+                              value={lastName}
+                              onChange={(event) =>
+                                 setLastName(event.target.value)
                               }
                               aria-invalid={!!formState.zodErrors?.lastName}
                            />
@@ -168,7 +197,8 @@ export function ProfileForm({ user, className }: Readonly<ProfileFormProps>) {
                            name="bio"
                            placeholder="Escribe tu biografía aquí..."
                            className={PROFILE_FORM_STYLES.textarea}
-                           defaultValue={formState.data?.bio ?? user.bio ?? ""}
+                           value={bio}
+                           onChange={(event) => setBio(event.target.value)}
                            aria-invalid={!!formState.zodErrors?.bio}
                         />
                         <FieldError
@@ -184,6 +214,7 @@ export function ProfileForm({ user, className }: Readonly<ProfileFormProps>) {
                      text="Guardar perfil"
                      loadingText="Guardando perfil"
                      loading={isPending}
+                     disabled={!isDirty}
                   />
 
                   {formState.strapiErrors && (
