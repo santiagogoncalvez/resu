@@ -73,7 +73,7 @@ export function FeaturesSection() {
                            "relative",
                         )}
                      >
-                        <div className="absolute inset-x-0 z-10 bottom-0 h-3/5 bg-linear-to-b from-transparent via-background/40 to-background w-screen left-1/2 -translate-x-1/2" />
+                        <div className="absolute inset-x-0 z-10 bottom-0 h-3/5 bg-linear-to-b from-transparent via-background/40 to-background w-screen left-1/2 -translate-x-1/2 max-w-full" />
 
                         <div className="overflow-hidden rounded-3xl border border-sidebar-border/50">
                            <Image
