@@ -10,6 +10,10 @@ export const TRANSCRIPT_MESSAGES = {
       NOT_FOUND: "No se encontró una transcripción para este video.",
       RATE_LIMIT:
          "El servicio de transcripciones alcanzó su límite de solicitudes. Inténtalo más tarde.",
+      QUOTA_EXCEEDED:
+         "Llegamos al límite de videos por hoy. Volvé a probar mañana.",
+      UNAUTHORIZED:
+         "El servicio de videos no está disponible ahora. Probá más tarde.",
       SERVICE_UNAVAILABLE:
          "El servicio de transcripciones no está disponible temporalmente.",
       FETCH_FAILED: "No se pudo obtener la transcripción.",

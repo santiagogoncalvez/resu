@@ -5,6 +5,8 @@ export type YouTubeServiceErrorCode =
    | "NO_TRANSCRIPT"
    | "EMPTY_TRANSCRIPT"
    | "RATE_LIMIT"
+   | "QUOTA_EXCEEDED"
+   | "UNAUTHORIZED"
    | "TIMEOUT"
    | "SERVICE_UNAVAILABLE"
    | "UNKNOWN_ERROR";

@@ -14,12 +14,23 @@ export async function getTranscript(
       throw new Error(TRANSCRIPT_MESSAGES.ERROR.VIDEO_ID_REQUIRED);
    }
 
+   const apiKey = process.env.YOUTUBE_TRANSCRIPT_API_KEY;
+
+   if (!apiKey) {
+      throw new YouTubeServiceError(
+         "UNAUTHORIZED",
+         "Missing YOUTUBE_TRANSCRIPT_API_KEY",
+         401,
+      );
+   }
+
    try {
       const { data } = await axios.get<string>(
          `${BASE_URL}/${encodeURIComponent(videoId)}.txt`,
          {
             headers: {
                Accept: "text/plain",
+               Authorization: `Bearer ${apiKey}`,
             },
             responseType: "text",
             timeout: 15_000,
@@ -73,10 +84,16 @@ export async function getTranscript(
                   "Video or transcript not found",
                   404,
                );
+            case 401:
+               throw new YouTubeServiceError(
+                  "UNAUTHORIZED",
+                  "Invalid or missing API key",
+                  401,
+               );
             case 429:
                throw new YouTubeServiceError(
-                  "RATE_LIMIT",
-                  "Rate limit exceeded",
+                  "QUOTA_EXCEEDED",
+                  "Daily quota exceeded",
                   429,
                );
             default:
